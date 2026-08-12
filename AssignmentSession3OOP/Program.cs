@@ -22,6 +22,26 @@
              */
 
             #endregion
+            #region Question02
+
+            /*
+             a)  What is the purpose of the sealed keyword when applied to a class?
+
+            ans => A sealed class prevents other classes from inheriting from it
+
+            b)  What is the difference between a sealed class and a sealed method?
+
+            ans=> A `sealed` class prevents inheritance, effectively protecting the class itself. 
+            However, a `sealed` method must be used in conjunction with the `override` keyword; 
+            this means the method must be inherited and overridden before it can be marked as `sealed`,
+            thereby protecting that specific method.
+
+            c)  Can a sealed method be overridden? Why?
+
+            ans => No, because the sealed keyword prevents further overriding of the method in derived classes
+
+             */
+            #endregion
         }
     }
 }
