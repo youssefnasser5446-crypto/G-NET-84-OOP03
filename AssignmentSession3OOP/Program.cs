@@ -1,4 +1,6 @@
-﻿namespace AssignmentSession3OOP
+﻿using AssignmentSession3OOP.inheritance;
+
+namespace AssignmentSession3OOP
 {
     internal class Program
     {
@@ -22,6 +24,7 @@
              */
 
             #endregion
+
             #region Question02
 
             /*
@@ -42,6 +45,94 @@
 
              */
             #endregion
+
+            Driver driver = new Driver();
+            DeliveryCenter delivery = new DeliveryCenter();
+            driver.DriverId = 1;
+            driver.FullName = "yousef";
+            driver.PhoneNumber = "01101531445";
+            delivery.Driver = driver;
+
+            Console.WriteLine("Enter Delevery Center");
+            string? deleveryName = Console.ReadLine();
+
+            Shipment standard = new StandardShipment("SH001", "Laptop", 3, 80);
+            Shipment Express = new ExpressShipment("SH002", "Mobile Phone", 2, 60, 30);
+            Shipment international = new InternationalShipment("SH003", "Televition", 8, 120, "Germany", 100);
+
+            DeliveryCenter DC = new DeliveryCenter();
+            Console.WriteLine(DC.AddShipment(standard) ? "Shipment Added Succssfully" : "Shipment Not Added");
+            Console.WriteLine(DC.AddShipment(Express) ? "Shipment Added Succssfully" : "Shipment Not Added");
+            Console.WriteLine(DC.AddShipment(international) ? "Shipment Added Succssfully" : "Shipment Not Added");
+
+            Console.WriteLine("Standard Shipment\n");
+            DeliveryHelper.PrintShipmentDetails(standard);
+            Console.WriteLine("Express Shipment\n");
+            DeliveryHelper.PrintShipmentDetails(Express);
+            Console.WriteLine("International Shipment\n");
+            DeliveryHelper.PrintShipmentDetails(international);
+
+            Console.WriteLine("===========================================================");
+            Console.WriteLine($"Printing Using DeliveryHelper...");
+            Console.WriteLine("===========================================================");
+            if (standard is not null)
+                Console.WriteLine("Standard Shipment Printed Successfully.");
+            if (Express is not null)
+                Console.WriteLine("Express Shipment Printed Successfully.");
+            if (international is not null)
+                Console.WriteLine("International Shipment Printed Successfully.");
+
+
+            Console.WriteLine("\n===========================================================");
+            Console.WriteLine("Updating Weight ...\n");
+
+            if (standard is not null)
+            {
+                Console.WriteLine($"Original Weight : {standard.Weight} KG");
+                standard.UpdateWeight(5);
+                Console.WriteLine($"Updated Weight : {standard.Weight} KG");
+
+                standard.UpdateWeight(5, .5m);
+                Console.WriteLine($"Updated Weight After Packing : {standard.Weight} KG");
+            }
+            DC.PrintAllShipments();
+            Console.Write("Enter Tracking code To Remove : ");
+            string? trackCode = Console.ReadLine();
+
+
+            bool isRmove;
+            if (!string.IsNullOrWhiteSpace(trackCode) && trackCode != "")
+            {
+                isRmove = DC.RemoveShipment(trackCode);
+            }
+            else
+            {
+                Console.WriteLine("please enter Trace code");
+                isRmove = false;
+            }
+
+            Console.WriteLine(isRmove ? "Removed Successfully" : "not Removed");
+
+            Console.WriteLine("===========================================================");
+            Console.WriteLine("Remaining Shipment ");
+            Console.WriteLine("===========================================================");
+
+
+
+            Console.WriteLine("===========================================================");
+            Console.WriteLine("Printing Using Shipment[]...");
+
+            if (standard is not null && Express is not null && international is not null)
+            {
+                Shipment[] shipment = { standard, Express, international };
+                foreach (Shipment ship in shipment)
+                {
+                    Console.WriteLine(ship.PrintShipment());
+                }
+            }
+            // sealed class and method
+            // sealed class canot be inheritance by other class
+            // sealed method cannot be override by subclass
         }
     }
 }
